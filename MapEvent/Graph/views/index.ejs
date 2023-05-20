@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ChartJS Project</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+        }
+        canvas {
+            background-color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <p>Kills per minute: <%- killsPerMinute %> || Kills in the last minute: <%- killsLastMinute %> || Highest kills in one minute: <%- highestKillsInMinute %> || Lowest kills in one minute: <%- lowestKillsInMinute %> || Time Elapsed: <%= elapsedTimeMinutes %> minutes || Total Kills: <%- totalKills %></p>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: <%- JSON.stringify(timestamps) %>,
+                datasets: [{
+                    label: 'PMC / SCAV kills',
+                    data: <%- JSON.stringify(counts) %>,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    },
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        setTimeout(function(){
+          location.reload();
+        }, 10000);  // Refresh page every 90000 milliseconds (90 seconds)
+      </script>
+      
+</body>
+</html>
